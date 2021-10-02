@@ -1,8 +1,8 @@
 # Order Assistant
 
-## Setup
-
+## API Setup
 ```bash
+cd api
 pipenv install
 pipenv shell
 uvicorn main:app --reload
