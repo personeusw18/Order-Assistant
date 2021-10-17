@@ -7,6 +7,7 @@ app = FastAPI()
 
 def get_db():
     db = SessionLocal()
+    #print(db)
     try:
         yield db
     finally:
@@ -15,6 +16,7 @@ def get_db():
 @app.get("/menu/{menu_id}")
 def get_menu(menu_id: int, db: SessionLocal = Depends(get_db)):
     # get menu
+    #print(db)
     return {"menu_id": menu_id}
 
 @app.post("/order")
