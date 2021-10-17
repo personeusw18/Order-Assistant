@@ -13,7 +13,7 @@ def get_db():
         db.close()
 
 @app.get("/menu/{menu_id}")
-def create_menu(menu_id: int, db: SessionLocal = Depends(get_db)):
+def get_menu(menu_id: int, db: SessionLocal = Depends(get_db)):
     # get menu
     return {"menu_id": menu_id}
 
