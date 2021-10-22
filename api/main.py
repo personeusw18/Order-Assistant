@@ -1,21 +1,45 @@
-from fastapi import FastAPI
-from pydantic import BaseSettings, Field
-
-# Set up env vars
-class Settings(BaseSettings):
-    type: str = Field('', env='type')
-    project_id: str = Field('', env='project_id')
-    private_key_id: str = Field('', env='private_key_id')
-    private_key: str = Field('', env='private_key')
-    client_email: str = Field('', env='client_email')
-    client_id: str = Field('', env='client_id')
-    auth_uri: str = Field('', env='auth_uri')
-    token_uri: str = Field('', env='token_uri')
-    auth_provider_x509_cert_url: str = Field('', env='auth_provider_x509_cert_url')
-    client_x509_cert_url: str = Field('', env='client_x509_cert_url')
+from fastapi import FastAPI, Depends, File
+from google.cloud import speech
+from sqlalchemy.sql.functions import mode
+import models.models
+from models.models import Menu
+from database import SessionLocal
 
 app = FastAPI()
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+def get_db():
+    db = SessionLocal()
+    #print(db)
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.get("/menu/{menu_id}")
+def get_menu(menu_id: int, db: SessionLocal = Depends(get_db)):
+    # get menu
+    #print(db)
+    return {"menu_id": menu_id}
+
+@app.post("/order")
+def create_order(menu_id: int, order_audio: bytes = File(...), db: SessionLocal = Depends(get_db)):
+    print(menu_id)
+    client = speech.SpeechClient()
+    audio = speech.RecognitionAudio(content=order_audio)
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=16000,
+        language_code="en-US",
+    )
+    response = client.recognize(config=config, audio=audio)
+    print(response)
+    return { 'order': [] }
+
+@app.post("/menu")
+def create_menu(menu_id: int, resturant_name: str, db: SessionLocal = Depends(get_db)):
+    # create menu object
+    db_menu = Menu(id= menu_id, resturant_name=resturant_name)
+    db.add(db_menu)
+    db.commit()
+    db.refresh(db_menu)
+    return {"Created menu": menu_id}

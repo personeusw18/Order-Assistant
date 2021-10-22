@@ -8,6 +8,11 @@ fastapi = "*"
 uvicorn = "*"
 shell = "*"
 python-dotenv = "*"
+google-cloud-speech = "*"
+google-cloud-language = "*"
+sqlalchemy = "*"
+pg8000 = "*"
+python-multipart = "*"
 
 [dev-packages]
 
