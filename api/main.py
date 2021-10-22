@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Depends, File
 from google.cloud import speech
-
+from sqlalchemy.sql.functions import mode
+import models.models
+from models.models import Menu
 from database import SessionLocal
 
 app = FastAPI()
@@ -32,3 +34,12 @@ def create_order(menu_id: int, order_audio: bytes = File(...), db: SessionLocal 
     response = client.recognize(config=config, audio=audio)
     print(response)
     return { 'order': [] }
+
+@app.post("/menu")
+def create_menu(menu_id: int, resturant_name: str, db: SessionLocal = Depends(get_db)):
+    # create menu object
+    db_menu = Menu(id= menu_id, resturant_name=resturant_name)
+    db.add(db_menu)
+    db.commit()
+    db.refresh(db_menu)
+    return {"Created menu": menu_id}
