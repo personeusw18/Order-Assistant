@@ -1,5 +1,8 @@
 import axios from 'axios';
 import React,{Component} from 'react'; 
+
+const API = "http://localhost:8000/"
+
 class App extends Component { 
 
     state = { 
@@ -30,7 +33,14 @@ class App extends Component {
      
       // Request made to the backend api 
       // Send formData object 
-      axios.post("api/uploadfile", formData); 
+
+      axios.post(API + "dummy_order", {})
+      .then(
+        res => {
+          const order = res.data;
+          console.log(order);
+        }
+      );
     }; 
      
     // File content to be displayed after 
@@ -40,13 +50,13 @@ class App extends Component {
           
         return ( 
           <div> 
-            <h2>File Details:</h2> 
+            {/* <h2>File Details:</h2> 
             <p>File Name: {this.state.audioFile.name}</p> 
             <p>File Type: {this.state.audioFile.type}</p> 
             <p> 
               Last Modified:{" "} 
               {this.state.audioFile.lastModifiedDate.toDateString()} 
-            </p> 
+            </p>  */}
           </div> 
         ); 
       } else { 
