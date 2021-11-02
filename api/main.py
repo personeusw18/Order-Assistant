@@ -4,8 +4,21 @@ from sqlalchemy.sql.functions import mode
 import models.models
 from models.models import Menu
 from database import SessionLocal
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()
@@ -43,3 +56,11 @@ def create_menu(menu_id: int, resturant_name: str, db: SessionLocal = Depends(ge
     db.commit()
     db.refresh(db_menu)
     return {"Created menu": menu_id}
+
+
+@app.post("/dummy_order")
+def dummy_order():
+    return [
+        ["fries", 2],
+        ["coffee", 1],
+    ]
