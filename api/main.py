@@ -39,13 +39,13 @@ def create_audio_order(menu_id: int, order_audio: bytes = File(...), db: Session
     order_text = gcp.convert_audio_to_text(order_audio)
     processed_language = gcp.process_language(order_text)
     # TODO: convert processed language to order
-    return { 'order': [] }
+    return { 'order': processed_language }
 
 @app.post("/order/text")
 def create_text_order(menu_id: int, order_text: str, db: SessionLocal = Depends(get_db)):
     processed_language = gcp.process_language(order_text)
     # TODO: convert processed language to order
-    return { 'order': [] }
+    return { 'order': processed_language }
 
 @app.post("/menu")
 def create_menu(menu_id: int, resturant_name: str, db: SessionLocal = Depends(get_db)):

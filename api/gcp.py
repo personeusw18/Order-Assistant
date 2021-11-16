@@ -5,8 +5,8 @@ def convert_audio_to_text(order_audio: bytes) -> str:
     client = speech.SpeechClient()
     audio = speech.RecognitionAudio(content=order_audio)
     config = speech.RecognitionConfig(
-        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-        sample_rate_hertz=16000,
+        encoding=speech.RecognitionConfig.AudioEncoding.FLAC,
+        sample_rate_hertz=48000,
         language_code="en-US",
     )
     response = client.recognize(config=config, audio=audio)
