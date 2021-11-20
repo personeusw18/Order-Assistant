@@ -27,7 +27,6 @@ app.add_middleware(
 # database dependency
 def get_db():
     db = SessionLocal()
-    #print(db)
     try:
         yield db
     finally:
@@ -41,8 +40,6 @@ def get_restaurant(restaurant_id: int, db: SessionLocal = Depends(get_db)):
 @app.get("/restaurant/", response_model=List[schemas.RestaurantBase])
 def get_restaurants(db: SessionLocal = Depends(get_db)):
     restauraunts = crud.get_restaurants(db)
-    for r in restauraunts:
-        print(r.id)
     return restauraunts
 
 @app.post("/order/audio")
