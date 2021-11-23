@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, File
+from sqlalchemy.orm import session
 from sqlalchemy.sql.functions import mode
 import models.models
 from models.models import Menu
@@ -30,8 +31,7 @@ def get_db():
 
 @app.get("/menu/{menu_id}")
 def get_menu(menu_id: int, db: SessionLocal = Depends(get_db)):
-    # get menu
-    #print(db)
+    searched_menu = session.query(Menu).get(menu_id)
     return {"menu_id": menu_id}
 
 @app.post("/order/audio")
@@ -46,6 +46,7 @@ def create_text_order(menu_id: int, order_text: str, db: SessionLocal = Depends(
     processed_language = gcp.process_language(order_text)
     # TODO: convert processed language to order
     return { 'order': processed_language }
+
 
 @app.post("/menu")
 def create_menu(menu_id: int, resturant_name: str, db: SessionLocal = Depends(get_db)):
