@@ -24,7 +24,7 @@ uvicorn main:app --reload
 ## **Active Endpoints**
 1. ```POST /menu```
     - Creates menu object and stores in database instance.
-2. ```POST /rest_database```
+2. ```POST /reset_database```
     - Clears database and loads it with starter menus (Dunkin Donuts and McDonalds)
 3. ```GET /restaurant/<restaurant_id>```
     - Returns restaurant with given id, including name, and menu items (for displaying on the frontend)
