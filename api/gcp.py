@@ -28,5 +28,5 @@ def process_language(order: str):
     })
     entities = []
     for entity in response.entities:
-        entities.append(entity.name)
+        entities.append(entity.name.lower())
     return entities
