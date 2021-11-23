@@ -24,8 +24,12 @@ uvicorn main:app --reload
 ## **Active Endpoints**
 1. ```POST /menu```
     - Creates menu object and stores in database instance.
-2. ```More endpoints coming soon```
-
+2. ```POST /rest_database```
+    - Clears database and loads it with starter menus (Dunkin Donuts and McDonalds)
+3. ```GET /restaurant/<restaurant_id>```
+    - Returns restaurant with given id, including name, and menu items (for displaying on the frontend)
+4. ```GET /restaurant```
+    - Returns restaurants available (just the names and ids)
 <br />
 
 ## **Setup Documentation & Procedure**
@@ -42,4 +46,18 @@ The Cloud SQL Admin API allows us to create and access the Cloud SQL instance of
 
 ### **Database Setup Information**
 
-A PostgreSQL instance was issued from GCP to serve as the main persistent datastore for this repository. The database will contain 5 major tables: Restaurants, Menus, Items, Addons, and Identifiers. These tables are currently a work in progress but are created through the GCP developer console. Our API connects to the SQL cloud instance via the machine's IP address, and the standard Postgres port number. The connection uses pg8000 drivers. A database diagram to be included in this read me is currently a work in progress.
+A locally hosted PostgresSQL instance is used as the main store of persistent data for this application. The following connection info can be included in a .env file to access your locally installed Postgres instance as the Postgres user:
+```bash
+DB_USER="postgres"
+DB_PASS='postgres user passsword'
+DB_NAME="orderassistant"
+DB_HOST="localhost"
+DB_PORT="5432"
+```
+The database contains 3 major tables: *restaurants*, *menu_itmes*, and *identifiers*. To load the default dataset onto a local Postgres instance query the '/reset_database' endpoint. An entity-relation diagram is included below.
+
+![ERDiagram](ERdiagram.png)
+
+
+
+
