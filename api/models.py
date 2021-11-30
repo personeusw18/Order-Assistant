@@ -12,6 +12,7 @@ class Restaurant(Base):
     # attributes
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
+    img = Column(String(300), nullable=False)
 
     # relationships
     menu_items = relationship('MenuItem', back_populates='restaurant', cascade="all, delete")

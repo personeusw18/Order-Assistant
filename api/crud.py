@@ -26,6 +26,7 @@ def reset_db(db: Session):
     dunkin = models.Restaurant(
         id = 1,
         name="Dunkin Donuts",
+        img=r"https://upload.wikimedia.org/wikipedia/en/thumb/b/b8/Dunkin%27_Donuts_logo.svg/1200px-Dunkin%27_Donuts_logo.svg.png",
         menu_items=[
             models.MenuItem(
                 name="Coffee",
@@ -69,6 +70,7 @@ def reset_db(db: Session):
     mcdonalds = models.Restaurant(
         id=2,
         name="McDonalds",
+        img=r"https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/2339px-McDonald%27s_Golden_Arches.svg.png",
         menu_items=[
             models.MenuItem(
                 name="Big Mac",
