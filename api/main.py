@@ -44,7 +44,7 @@ def get_restaurants(db: SessionLocal = Depends(get_db)):
     return restauraunts
 
 @app.post("/order/audio")
-def create_audio_order(menu_id: int, order_audio: bytes = File(...), db: SessionLocal = Depends(get_db)):
+def create_audio_order(restaurant_id: int, order_audio: bytes = File(...), db: SessionLocal = Depends(get_db)):
     order_text = gcp.convert_audio_to_text(order_audio)
     entities = gcp.get_entities(order_text)
     # TODO: convert processed language to order
