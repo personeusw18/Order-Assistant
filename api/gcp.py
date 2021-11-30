@@ -15,7 +15,7 @@ def convert_audio_to_text(order_audio: bytes) -> str:
         order_text += result.alternatives[0].transcript
     return order_text
 
-def process_language(order: str):
+def get_entities(order: str):
     client = language_v1.LanguageServiceClient()
     document = {
         "content": order,

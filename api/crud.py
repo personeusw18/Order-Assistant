@@ -10,10 +10,10 @@ def get_restaurants(db: Session):
     return db.query(models.Restaurant).all()
 
 def get_identifiers(db: Session, restaurant_id: int):
-    return db.query(models.Identifier).filter(models.Identifier.resturant_id == restaurant_id).all()
+    return db.query(models.Identifier).filter(models.Identifier.restaurant_id == restaurant_id).all()
 
 def get_menu_items(db: Session, menu_item_ids: List[int]):
-    return db.query(models.MenuItem).filter(models.MenuItem.id in menu_item_ids).all()
+    return db.query(models.MenuItem).filter(models.MenuItem.id.in_(menu_item_ids)).all()
 
 def reset_db(db: Session):
 
@@ -92,7 +92,7 @@ def reset_db(db: Session):
                 identifiers=[
                     models.Identifier(
                         restaurant_id=2,
-                        identifier="quart pounder"
+                        identifier="quarter pounder"
                     ),
                     models.Identifier(
                         restaurant_id=2,

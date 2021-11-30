@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import crud, models, schemas
 from database import SessionLocal, engine
+import helpers
 import gcp
 
 app = FastAPI()
@@ -45,15 +46,21 @@ def get_restaurants(db: SessionLocal = Depends(get_db)):
 @app.post("/order/audio")
 def create_audio_order(menu_id: int, order_audio: bytes = File(...), db: SessionLocal = Depends(get_db)):
     order_text = gcp.convert_audio_to_text(order_audio)
-    processed_language = gcp.process_language(order_text)
+    entities = gcp.get_entities(order_text)
     # TODO: convert processed language to order
     return { 'order': processed_language }
 
 @app.post("/order/text")
-def create_text_order(menu_id: int, order_text: str, db: SessionLocal = Depends(get_db)):
-    processed_language = gcp.process_language(order_text)
-    # TODO: convert processed language to order
-    return { 'order': processed_language }
+def create_text_order(restaurant_id: int, order_text: str, db: SessionLocal = Depends(get_db)):
+    entities = gcp.get_entities(order_text)
+    identifiers = crud.get_identifiers(db, restaurant_id)
+    menu_item_ids = helpers.get_menu_items_in_order(identifiers, entities)
+    menu_items = crud.get_menu_items(db, menu_item_ids)
+
+    print(menu_item_ids)
+    print(menu_items)
+
+    return { 'order': menu_items }
 
 @app.post('/reset_database')
 def reset_database(db: SessionLocal = Depends(get_db)):
