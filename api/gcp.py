@@ -4,9 +4,12 @@ from google.cloud import language_v1
 def convert_audio_to_text(order_audio: bytes) -> str:
     client = speech.SpeechClient()
     audio = speech.RecognitionAudio(content=order_audio)
+    # config for wave file
     config = speech.RecognitionConfig(
-        language_code="en-US",
-        audio_channel_count = 1
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=48000,
+        audio_channel_count=2,
+        language_code='en-US',
     )
     response = client.recognize(config=config, audio=audio)
     order_text = ''
