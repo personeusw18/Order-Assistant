@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import FastAPI, Depends, File
+from fastapi import FastAPI, Depends, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 
 import crud, models, schemas
@@ -46,9 +46,12 @@ def get_restaurants(db: SessionLocal = Depends(get_db)):
 @app.post("/order/audio")
 def create_audio_order(restaurant_id: int, order_audio: bytes = File(...), db: SessionLocal = Depends(get_db)):
     order_text = gcp.convert_audio_to_text(order_audio)
+    print(order_text)
     entities = gcp.get_entities(order_text)
-    # TODO: convert processed language to order
-    return { 'order': processed_language }
+    identifiers = crud.get_identifiers(db, restaurant_id)
+    menu_item_ids = helpers.get_menu_items_in_order(identifiers, entities)
+    menu_items = crud.get_menu_items(db, menu_item_ids)
+    return { 'order': menu_items }
 
 @app.post("/order/text")
 def create_text_order(restaurant_id: int, order_text: str, db: SessionLocal = Depends(get_db)):
