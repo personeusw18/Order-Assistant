@@ -48,11 +48,8 @@ def create_audio_order(restaurant_id: int, order_audio: bytes = File(...), db: S
     order_text = gcp.convert_audio_to_text(order_audio)
     print(order_text)
     entities = gcp.get_entities(order_text)
-    print(entities)
     identifiers = crud.get_identifiers(db, restaurant_id)
-    print(identifiers)
     menu_item_ids = helpers.get_menu_items_in_order(identifiers, entities)
-    print(menu_item_ids)
     menu_items = crud.get_menu_items(db, menu_item_ids)
     return { 'order': menu_items, 'total': helpers.get_order_total(menu_items)}
 
