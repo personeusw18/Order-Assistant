@@ -51,7 +51,7 @@ def create_audio_order(restaurant_id: int, order_audio: bytes = File(...), db: S
     identifiers = crud.get_identifiers(db, restaurant_id)
     menu_item_ids = helpers.get_menu_items_in_order(identifiers, entities)
     menu_items = crud.get_menu_items(db, menu_item_ids)
-    return { 'order': menu_items }
+    return { 'order': menu_items, 'total': helpers.get_order_total(menu_items)}
 
 @app.post("/order/text")
 def create_text_order(restaurant_id: int, order_text: str, db: SessionLocal = Depends(get_db)):
