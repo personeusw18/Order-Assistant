@@ -43,26 +43,21 @@ def get_restaurants(db: SessionLocal = Depends(get_db)):
     restauraunts = crud.get_restaurants(db)
     return restauraunts
 
-@app.post("/order/audio")
+@app.post("/order/audio/{restaurant_id}")
 def create_audio_order(restaurant_id: int, order_audio: bytes = File(...), db: SessionLocal = Depends(get_db)):
     order_text = gcp.convert_audio_to_text(order_audio)
-    print(order_text)
     entities = gcp.get_entities(order_text)
     identifiers = crud.get_identifiers(db, restaurant_id)
     menu_item_ids = helpers.get_menu_items_in_order(identifiers, entities)
     menu_items = crud.get_menu_items(db, menu_item_ids)
     return { 'order': menu_items, 'total': helpers.get_order_total(menu_items)}
 
-@app.post("/order/text")
+@app.post("/order/text/{restaurant_id}")
 def create_text_order(restaurant_id: int, order_text: str, db: SessionLocal = Depends(get_db)):
     entities = gcp.get_entities(order_text)
     identifiers = crud.get_identifiers(db, restaurant_id)
     menu_item_ids = helpers.get_menu_items_in_order(identifiers, entities)
     menu_items = crud.get_menu_items(db, menu_item_ids)
-
-    print(menu_item_ids)
-    print(menu_items)
-
     return { 'order': menu_items }
 
 @app.post('/reset_database')

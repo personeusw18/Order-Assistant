@@ -11,7 +11,6 @@ def get_order_total(menu_items):
     total = 0.0
     for item in menu_items:
         total += item.price
-        print(item.price)
     return total
 
             
