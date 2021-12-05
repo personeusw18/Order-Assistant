@@ -25,11 +25,12 @@ function Menu(props) {
         {
           restaurant.menu_items.map(menuItem => (
             <div className="p-3" key={menuItem.id}>
-              <div key={menuItem.id} className="card p-2">
+              <div key={menuItem.id} className="card">
                 <img src={menuItem.img} className="card-img-top" alt="..."></img>
                 <div className="card-body">
                   <h5 className="card-title">{menuItem.name}</h5>
                   <p className="card-text">{menuItem.desc}</p>
+                  <small className="text-muted">{menuItem.price}</small>
                 </div>
               </div>
             </div>
