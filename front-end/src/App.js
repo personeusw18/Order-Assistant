@@ -95,10 +95,10 @@ export default class App extends Component{
             <div>
                 <nav className="navbar navbar-light bg-light">
                     <div className="container">
-                        <a className="navbar-brand text-primary" href="#">
-                            <img src="https://www.chatbot.com/favicon.ico" width="30" height="30" class="d-inline-block align-top me-2"></img>
+                        <div className="navbar-brand text-primary">
+                            <img src="https://www.chatbot.com/favicon.ico" width="30" height="30" className="d-inline-block align-top me-2" alt="logo"></img>
                             Order Assistant
-                        </a>
+                        </div>
                     </div>
                 </nav>
 
@@ -119,7 +119,7 @@ export default class App extends Component{
 
                     { this.state.restaurantId && <button type="button"  data-bs-toggle="modal" data-bs-target="#orderModal" className="btn btn-success mb-5">Ready to order</button> }
 
-                    <div className="modal fade" id="orderModal" aria-hidden="true" tabindex="-1">
+                    <div className="modal fade" id="orderModal" aria-hidden="true" tabIndex="-1">
                         <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content">
                                 <div className="modal-header">
@@ -129,10 +129,10 @@ export default class App extends Component{
                                 <div className="modal-body">
                                     <div style={{ textAlign: "center" }} className="p-2">
                                         <div className="btn-group" role="group">
-                                            <input onClick={() => this.changeOrderMode("TEXT")} type="radio" className="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked={this.state.orderMode==="TEXT"}></input>
-                                            <label className="btn btn-outline-primary" for="btnradio1">Make text order</label>
-                                            <input onClick={() => this.changeOrderMode("AUDIO")} type="radio" className="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked={this.state.orderMode==="AUDIO"}></input>
-                                            <label className="btn btn-outline-primary" for="btnradio2">Make audio order</label>
+                                            <input onChange={() => this.changeOrderMode("TEXT")} type="radio" className="btn-check" name="btnradio" id="btnradio1" autoComplete="off" checked={this.state.orderMode==="TEXT"}></input>
+                                            <label className="btn btn-outline-primary" htmlFor="btnradio1">Make text order</label>
+                                            <input onChange={() => this.changeOrderMode("AUDIO")} type="radio" className="btn-check" name="btnradio" id="btnradio2" autoComplete="off" checked={this.state.orderMode==="AUDIO"}></input>
+                                            <label className="btn btn-outline-primary" htmlFor="btnradio2">Make audio order</label>
                                         </div>
                                     </div>
                                     {
@@ -148,7 +148,7 @@ export default class App extends Component{
                                         this.state.orderMode === 'TEXT' && (
                                             <div className="p-2">
                                                 <textarea className="form-control" placeholder="Can I get a..." onChange={this.onOrderTextChange} value={this.state.orderText}></textarea>
-                                                <button data-bs-toggle="modal" data-bs-target="#receiptModal" class="btn btn-primary" onClick={this.makeTextOrder}>Make Order</button>
+                                                <button data-bs-toggle="modal" data-bs-target="#receiptModal" className="btn btn-primary mt-2" onClick={this.makeTextOrder}>Make Order</button>
                                             </div>
                                         )
                                     }
@@ -158,7 +158,7 @@ export default class App extends Component{
                     </div>
 
 
-                    <div className="modal fade" id="receiptModal" aria-hidden="true" tabindex="-1">
+                    <div className="modal fade" id="receiptModal" aria-hidden="true" tabIndex="-1">
                         <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content">
                                 <div className="modal-header">

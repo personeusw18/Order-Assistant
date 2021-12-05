@@ -7,7 +7,7 @@ function Order(props) {
         {
           props.order.order.map((item, index) => {
             return (
-              <div className="list-group-item list-group-item-action">
+              <div className="list-group-item list-group-item-action" key={item.name}>
                 <div className="d-flex w-100 justify-content-between">
                   <p className="mb-1">{item.name}</p>
                   <small>${item.price}</small>
@@ -39,8 +39,8 @@ function Order(props) {
 
     </div>
   ) : (
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
+    <div className="spinner-border" role="status">
+      <span className="visually-hidden">Loading...</span>
     </div>
   )
 }

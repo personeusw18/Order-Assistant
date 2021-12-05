@@ -24,7 +24,7 @@ function Menu(props) {
       <div className="row row-cols-3">
         {
           restaurant.menu_items.map(menuItem => (
-            <div className="p-3">
+            <div className="p-3" key={menuItem.id}>
               <div key={menuItem.id} className="card p-2">
                 <img src={menuItem.img} className="card-img-top" alt="..."></img>
                 <div className="card-body">
@@ -39,8 +39,8 @@ function Menu(props) {
     </div>
   ) : 
   (
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
+    <div className="spinner-border" role="status">
+      <span className="visually-hidden">Loading...</span>
     </div>
   );
 
