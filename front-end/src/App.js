@@ -82,6 +82,12 @@ export default class App extends Component{
         })
     }
 
+    clearOrder = () => {
+        this.setState({
+            order: null
+        })
+    }
+
     render() {
         const { recordState } = this.state;
 
@@ -157,13 +163,13 @@ export default class App extends Component{
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h5 className="modal-title" id="exampleModalToggleLabel">Receipt</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button onClick={this.clearOrder} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
                                     <Order order={this.state.order} />
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button onClick={this.clearOrder} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="button" className="btn btn-primary">Proceed to Checkout</button>
                                 </div>
                             </div>
