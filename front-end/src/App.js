@@ -137,16 +137,16 @@ export default class App extends Component{
                                     </div>
                                     {
                                         this.state.orderMode === 'AUDIO' && (
-                                            <div className="p-2">
-                                                <AudioReactRecorder state={recordState} onStop={this.makeAudioOrder} canvasWidth="400%"/>
-                                                <button className="btn btn-primary" onClick={this.start}>Start Order</button>
+                                            <div className="p-2" style={{ textAlign: "center" }}>
+                                                <AudioReactRecorder state={recordState} onStop={this.makeAudioOrder} canvasWidth="420%"/>
+                                                { (recordState === RecordState.STOP || recordState === null) && <button className="btn btn-primary" onClick={this.start}>Start Order</button> }
                                                 { recordState === RecordState.START && <button data-bs-toggle="modal" data-bs-target="#receiptModal" className="btn btn-primary" onClick={this.stop}>Make Order</button> }
                                             </div>
                                         )
                                     }
                                     {
                                         this.state.orderMode === 'TEXT' && (
-                                            <div className="p-2">
+                                            <div className="p-2" style={{ textAlign: "center" }}>
                                                 <textarea className="form-control" placeholder="Can I get a..." onChange={this.onOrderTextChange} value={this.state.orderText}></textarea>
                                                 <button data-bs-toggle="modal" data-bs-target="#receiptModal" className="btn btn-primary mt-2" onClick={this.makeTextOrder}>Make Order</button>
                                             </div>
