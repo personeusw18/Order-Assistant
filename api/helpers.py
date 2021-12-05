@@ -7,11 +7,14 @@ def get_menu_items_in_order(identifiers, entities):
             menu_item_ids.append(identifier.menu_item_id)
     return menu_item_ids
 
-def get_order_total(menu_items):
-    total = 0.0
+def get_cost(menu_items):
+    subtotal = 0.0
     for item in menu_items:
-        total += item.price
-    return total
+        subtotal += item.price
+    taxes = subtotal * 0.0875
+    taxes = round(taxes, 2)
+    total = subtotal + taxes
+    return subtotal, taxes, total
 
             
     

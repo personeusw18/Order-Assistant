@@ -70,9 +70,9 @@ export default class App extends Component{
         })
     }
 
-    changeOrderMode = (event) => {
+    changeOrderMode = (mode) => {
         this.setState({
-            orderMode: event.target.value
+            orderMode: mode
         })
     }
 
@@ -82,51 +82,102 @@ export default class App extends Component{
         })
     }
 
+    clearOrder = () => {
+        this.setState({
+            order: null
+        })
+    }
+
     render() {
         const { recordState } = this.state;
 
         return(
             <div>
-                <h1> Order Assistant </h1>
-
-                <p>Which restaurant would you like to order from?</p>
-                <select className="form-select" onChange={this.changeRestaurant}>
-                    <option value="">--- choose a restaurant ---</option>
-                    {
-                        this.state.restaurants.map(restaurant => {
-                            return <option key={restaurant.id} value={restaurant.id}>{restaurant.name}</option>
-                        })
-                    }
-                </select>
-
-                { this.state.restaurantId && <Menu restaurantId={this.state.restaurantId} /> }
-
-                <p>How would you like to order?</p>
-                <select className="form-select" onChange={this.changeOrderMode}>
-                    <option value="TEXT">Text</option>
-                    <option value="AUDIO">Audio</option>
-                </select>
-
-                {
-                    this.state.orderMode === 'AUDIO' && (
-                        <div>
-                            <AudioReactRecorder state={recordState} onStop={this.makeAudioOrder} />
-                            <button onClick={this.start}>Start Order</button>
-                            <button onClick={this.stop}>Make Order</button>
+                <nav className="navbar navbar-light bg-light">
+                    <div className="container">
+                        <div className="navbar-brand text-primary">
+                            <img src="https://www.chatbot.com/favicon.ico" width="30" height="30" className="d-inline-block align-top me-2" alt="logo"></img>
+                            Order Assistant
                         </div>
-                    )
-                }
-                {
-                    this.state.orderMode === 'TEXT' && (
-                        <div>
-                            <textarea onChange={this.onOrderTextChange} value={this.state.orderText}></textarea>
-                            <button onClick={this.makeTextOrder}>Make Order</button>
+                    </div>
+                </nav>
+
+                <div className="container">
+                    <div className="mt-3">
+                        <label htmlFor="restaurant">Which restaurant would you like to order from?</label>
+                        <select id="restaurant" className="form-select" onChange={this.changeRestaurant}>
+                            <option defaultValue value="">--- choose a restaurant ---</option>
+                            {
+                                this.state.restaurants.map(restaurant => {
+                                    return <option key={restaurant.id} value={restaurant.id}>{restaurant.name}</option>
+                                })
+                            }
+                        </select>
+                    </div>
+
+                    { this.state.restaurantId && <Menu restaurantId={this.state.restaurantId} /> }
+
+                    { this.state.restaurantId && <button type="button"  data-bs-toggle="modal" data-bs-target="#orderModal" className="btn btn-success mb-5">Ready to order</button> }
+
+                    <div className="modal fade" id="orderModal" aria-hidden="true" tabIndex="-1">
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalToggleLabel">Create an Order</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <div style={{ textAlign: "center" }} className="p-2">
+                                        <div className="btn-group" role="group">
+                                            <input onChange={() => this.changeOrderMode("TEXT")} type="radio" className="btn-check" name="btnradio" id="btnradio1" autoComplete="off" checked={this.state.orderMode==="TEXT"}></input>
+                                            <label className="btn btn-outline-primary" htmlFor="btnradio1">Make text order</label>
+                                            <input onChange={() => this.changeOrderMode("AUDIO")} type="radio" className="btn-check" name="btnradio" id="btnradio2" autoComplete="off" checked={this.state.orderMode==="AUDIO"}></input>
+                                            <label className="btn btn-outline-primary" htmlFor="btnradio2">Make audio order</label>
+                                        </div>
+                                    </div>
+                                    {
+                                        this.state.orderMode === 'AUDIO' && (
+                                            <div className="p-2">
+                                                <AudioReactRecorder state={recordState} onStop={this.makeAudioOrder} canvasWidth="400%"/>
+                                                <button className="btn btn-primary" onClick={this.start}>Start Order</button>
+                                                { recordState === RecordState.START && <button data-bs-toggle="modal" data-bs-target="#receiptModal" className="btn btn-primary" onClick={this.stop}>Make Order</button> }
+                                            </div>
+                                        )
+                                    }
+                                    {
+                                        this.state.orderMode === 'TEXT' && (
+                                            <div className="p-2">
+                                                <textarea className="form-control" placeholder="Can I get a..." onChange={this.onOrderTextChange} value={this.state.orderText}></textarea>
+                                                <button data-bs-toggle="modal" data-bs-target="#receiptModal" className="btn btn-primary mt-2" onClick={this.makeTextOrder}>Make Order</button>
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </div>
                         </div>
-                    )
-                }
+                    </div>
 
-                { this.state.order && <Order order={this.state.order} /> }
 
+                    <div className="modal fade" id="receiptModal" aria-hidden="true" tabIndex="-1">
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalToggleLabel">Receipt</h5>
+                                    <button onClick={this.clearOrder} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <Order order={this.state.order} />
+                                </div>
+                                <div className="modal-footer">
+                                    <button onClick={this.clearOrder} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-primary">Proceed to Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
         )
     }

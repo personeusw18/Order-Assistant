@@ -50,7 +50,8 @@ def create_audio_order(restaurant_id: int, order_audio: bytes = File(...), db: S
     identifiers = crud.get_identifiers(db, restaurant_id)
     menu_item_ids = helpers.get_menu_items_in_order(identifiers, entities)
     menu_items = crud.get_menu_items(db, menu_item_ids)
-    return { 'order': menu_items, 'total': helpers.get_order_total(menu_items)}
+    subtotal, taxes, total = helpers.get_cost(menu_items)
+    return { 'order': menu_items, 'subtotal': subtotal, 'taxes': taxes, 'total': total }
 
 @app.post("/order/text/{restaurant_id}")
 def create_text_order(restaurant_id: int, order_text: str, db: SessionLocal = Depends(get_db)):
@@ -58,7 +59,8 @@ def create_text_order(restaurant_id: int, order_text: str, db: SessionLocal = De
     identifiers = crud.get_identifiers(db, restaurant_id)
     menu_item_ids = helpers.get_menu_items_in_order(identifiers, entities)
     menu_items = crud.get_menu_items(db, menu_item_ids)
-    return { 'order': menu_items }
+    subtotal, taxes, total = helpers.get_cost(menu_items)
+    return { 'order': menu_items, 'subtotal': subtotal, 'taxes': taxes, 'total': total }
 
 @app.post('/reset_database')
 def reset_database(db: SessionLocal = Depends(get_db)):
