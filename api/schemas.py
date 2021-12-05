@@ -6,6 +6,7 @@ class MenuItemBase(BaseModel):
     price: float
     name: str
     desc: str
+    img: str
 
     class Config:
         orm_mode = True

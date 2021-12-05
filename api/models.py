@@ -28,6 +28,7 @@ class MenuItem(Base):
     name = Column(String)
     desc = Column(String)
     price = Column(Float)
+    img = Column(String(300), nullable=False)
     restaurant_id = Column(Integer, ForeignKey('restaurants.id'))
 
     # relationships

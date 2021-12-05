@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Order(props) {
-  return (
+  return props.order ? (
     <div>
       <h2>Order</h2>
       {
@@ -15,6 +15,8 @@ function Order(props) {
         })
       }
     </div>
+  ) : (
+    <p>loading...</p>
   )
 }
 
