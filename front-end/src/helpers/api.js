@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = "http://localhost:8000/"
+const API = process.env.REACT_APP_API_URL;
 
 function getRestaurants() {
   return axios.get(API + 'restaurant')
