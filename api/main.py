@@ -16,6 +16,7 @@ models.Base.metadata.create_all(bind=engine)
 # cores setup
 origins = [
     "http://localhost:3000",
+    "https://orderassistant.netlify.app",
 ]
 app.add_middleware(
     CORSMiddleware,
