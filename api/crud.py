@@ -113,6 +113,132 @@ def reset_db(db: Session):
             ),
         ],
     )
+    penera = models.Restaurant(
+        id=3,
+        name='Panera Bread',
+        img=r"https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg",
+        menu_items =[
+            models.MenuItem(
+                name="Chipotle Chicken Avocado Melt",
+                desc=r"Smoked, pulled chicken raised without antibiotics, smoked Gouda, fresh avocado and cilantro, zesty sweet Peppadew™ peppers and chipotle sauce on Black Pepper Focaccia.",
+                price=9.99,
+                img=r"https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/grid/rect/chipotle-chicken-avocado-sandwich-sku-test-whole.jpg.transform/rect-grid-image/image.20211207.jpg",
+                identifiers=[
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='chipotle chicken avocado'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='chicken chipotle avocado'
+                    )
+                ]
+            ),
+            models.MenuItem(
+                name="Hazelnut Coffee",
+                desc=r"Smooth and sweet with a buttery toasted hazelnut flavor. 100% Arabica coffee balanced with the flavor of buttery, toasted hazelnuts.",
+                price=2.39,
+                img=r"https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/grid/rect/hot-coffee-medium.jpg.transform/rect-grid-image/image.20211207.jpg",
+                identifiers=[
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='hazelnut coffee'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='hazelnut'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='hot hazelnut'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='coffee'
+                    )
+                ]
+            ),
+            models.MenuItem(
+                name="BBQ Chicken Salad",
+                desc=r"Chicken raised without antibiotics, romaine, black bean and corn salsa and BBQ ranch dressing topped with frizzled onions and apple cider vinegar BBQ sauce.",
+                price=10.29,
+                img=r"https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/grid/rect/bbq-chicken-salad-whole.jpg.transform/rect-grid-image/image.20211207.jpg",
+                identifiers=[
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='barbecue chicken salad'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='BBQ chicken salad'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='chicken salad with barbecue'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='barbecue salad'
+                    )
+                ]
+            ),
+            models.MenuItem(
+                name="Toasted Steak & White Cheddar",
+                desc=r"Grass fed beef, aged white cheddar, pickled red onions and horseradish sauce on Artisan Ciabatta.",
+                price=11.19,
+                img=r"https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/grid/rect/steak-and-white-cheddar-panini-on-artisan-ciabatta-whole.jpg.transform/rect-grid-image/image.20211207.jpg",
+                identifiers=[
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='steak and white cheddar'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='steak and cheddar sandwich'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='steak and white cheddar sandwich'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='steak and cheese melt'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='steak'
+                    )
+                ]
+            ),
+            models.MenuItem(
+                name="Soda",
+                desc=r"Soda. Customize to choose flavor. Nutrition reflects beverage with no ice.",
+                price=2.59,
+                img=r"https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/grid/rect/custom-soda-flavor.jpg.transform/rect-grid-image/image.20211207.jpg",
+                identifiers=[
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='coke'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='sprite'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='ginger ale'
+                    ),
+                    models.Identifier(
+                        restaurant_id=3,
+                        identifier='lemonade'
+                    ),
+                ]
+            )
+        ]
+    )
+
+
     db.add(dunkin)
     db.add(mcdonalds)
+    db.add(penera)
     db.commit()
